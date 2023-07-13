@@ -88,33 +88,31 @@ bool Game::onRender(void)
     switch (activePage)
     {
         case 0: // todo START SCREEN
-            if(SDL_SetRenderDrawColor(renderer, 255,140, 234, 255) != 0) return false;
+            if(pages.StartPage.onRender(renderer, 255,140, 234, 255) != true) return false;
             break;
         case 1: // todo HOME SCREEN
-            if(SDL_SetRenderDrawColor(renderer, 0,0, 34, 255) != 0) return false;
+            if(pages.HomePage.onRender(renderer, 0,0, 34, 255) != true) return false;
             break;
         case 2: // todo EXIT SCREEN
-            if(SDL_SetRenderDrawColor(renderer, 20,140, 134, 255) != 0) return false;
+            if(pages.ExitPage.onRender(renderer, 20,140, 134, 255) != true) return false;
             break;
         case 3: // todo HOF SCREEN
-            if(SDL_SetRenderDrawColor(renderer, 255, 0, 24, 255) != 0) return false;
+            if(pages.HofPage.onRender(renderer, 255, 0, 24, 255) != true) return false;
             break;
         case 4: // todo HELP SCREEN
-            if(SDL_SetRenderDrawColor(renderer, 25, 0, 234, 255) != 0) return false;
+            if(pages.HelpPage.onRender(renderer, 25, 0, 234, 255) != true) return false;
             break;
         case 5: // todo CREDITS SCREEN
-            if(SDL_SetRenderDrawColor(renderer, 190,140, 0, 255) != 0) return false;
+            if(pages.CreditsPage.onRender(renderer, 190,140, 0, 255) != true) return false;
             break;
         case 7: // todo PLAY INIT SCREEN
-            if(SDL_SetRenderDrawColor(renderer, 45,100, 204, 255) != 0) return false;
+            if(pages.PlayMenuPage.onRender(renderer, 45,100, 204, 255) != true) return false;
             break;
         case 8: // todo PLAYER INIT SCREEN
-            if(SDL_SetRenderDrawColor(renderer, 250,100, 224, 255) != 0) return false;
+            if(pages.PlayerInitPage.onRender(renderer, 250,100, 224, 255) != true) return false;
             break;
         case 6: // todo DE gAME SCREEN
-            if(SDL_SetRenderDrawColor(renderer, 10,50, 24, 255) != 0) return false;
-            break;
-        default:
+            if(pages.DeGamePage.onRender(renderer, 10,50, 24, 255) != true) return false;
             break;
     }
 

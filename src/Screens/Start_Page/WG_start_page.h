@@ -1,11 +1,10 @@
-#if !defined(_WG_START_PAGE_H_)
-#define _WG_START_PAGE_H_
+#if !defined(WG_START_PAGE_H)
+#define WG_START_PAGE_H
 
 #include "WG_screen.h"
 
-class WG_Start_Page: Screen
+class WG_Start_Page: public Screen
 {
-
 };
 
-#endif // _WG_START_PAGE_H_
+#endif // WG_START_PAGE_H
