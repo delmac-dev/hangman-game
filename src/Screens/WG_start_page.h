@@ -5,6 +5,7 @@
 
 class WG_Start_Page: public Screen
 {
+
 };
 
 #endif // WG_START_PAGE_H

@@ -1,15 +1,15 @@
 #if !defined(_SCREENS_H_)
 #define _SCREENS_H_
 
-#include "Screens/Home_Page/WG_home_page.h"
-#include "Screens/Exit_Page/WG_exit_page.h"
-#include "Screens/Player_Page/WG_player_page.h"
-#include "Screens/Credits_Page/WG_credits_page.h"
-#include "Screens/Play_Page/WG_play_page.h"
-#include "Screens/Help_Page/WG_help_page.h"
-#include "Screens/HoF_Page/WG_hof_page.h"
-#include "Screens/Game_Page/WG_game_page.h"
-#include "Screens/Start_Page/WG_start_page.h"
+#include "WG_home_page.h"
+#include "WG_exit_page.h"
+#include "WG_player_page.h"
+#include "WG_credits_page.h"
+#include "WG_play_page.h"
+#include "WG_help_page.h"
+#include "WG_hof_page.h"
+#include "WG_game_page.h"
+#include "WG_start_page.h"
 
 struct Screens
 {

@@ -9,8 +9,9 @@
                 "-g",
                 "${fileDirname}/*.cpp",
                 "${fileDirname}/Base_Classes/*.cpp",
-                "${fileDirname}/Screens/**/*.cpp",
+                "${fileDirname}/Screens/*.cpp",
                 "-I${workspaceFolder}\\src\\Base_Classes",
+                "-I${workspaceFolder}\\src\\Screens",
                 "-I${workspaceFolder}\\include",
                 "-L${workspaceFolder}\\lib",
                 // "-w",
@@ -19,6 +20,7 @@
                 "-lSDL2main",
                 "-lSDL2",
                 "-lSDL2_image",
+                "-lSDL2_ttf",
                 "-o",
                 "${workspaceFolder}\\bin\\wgg.exe"
             ],

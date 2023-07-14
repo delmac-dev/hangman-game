@@ -57,7 +57,7 @@ int Game::onExecute(void)
 
     while (isRunning)
     {
-        while (SDL_PollEvent(&Event))
+        if(SDL_WaitEvent(&Event))
         {
             onEvent(&Event);
         }
