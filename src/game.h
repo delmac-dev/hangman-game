@@ -21,10 +21,10 @@ class Game
         string playerName;
         string hiddenWord;
 
-        Filezilla<Model_Word> Words;
-        Filezilla<Model_Players> Players;
-        Filezilla<Model_Settings> Settings;
-        Filezilla<Model_Game_Data> GameData;
+        Filezilla<Model_Word> Word_Cluster;
+        Filezilla<Model_Players> Player_Cluster;
+        Filezilla<Model_Settings> Setting_Cluster;
+        Filezilla<Model_Game_Data> GameData_Cluster;
 
         int windowHeight;
         int windowWidth;

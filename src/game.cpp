@@ -35,7 +35,14 @@ bool Game::onInit(void)
     renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED);
     if(renderer == NULL) return false;
 
+    // todo : read all data
+    // Word_Cluster.read();
+    // Player_Cluster.read();
+    // Setting_Cluster.read();
+    // GameData_Cluster.read();
+
     // todo : initialise start page;
+    pages.StartPage.onInit();
 
     return true;
 };
@@ -73,12 +80,33 @@ void Game::onEvent(SDL_Event* event)
     // todo : switch statement to handle events
     switch (activePage)
     {
-    case 0:
-        // todo run the startPage.onEvent()
-        break;
-    
-    default:
-        break;
+        case 0:
+            pages.StartPage.onEvent();
+            break;
+        case 1: // todo HOME SCREEN
+            pages.HomePage.onEvent();
+            break;
+        case 2: // todo EXIT SCREEN
+            pages.ExitPage.onEvent();
+            break;
+        case 3: // todo HOF SCREEN
+            pages.HofPage.onEvent();
+            break;
+        case 4: // todo HELP SCREEN
+            pages.HelpPage.onEvent();
+            break;
+        case 5: // todo CREDITS SCREEN
+            pages.CreditsPage.onEvent();
+            break;
+        case 7: // todo PLAY INIT SCREEN
+            pages.PlayMenuPage.onEvent();
+            break;
+        case 8: // todo PLAYER INIT SCREEN
+            pages.PlayerInitPage.onEvent();
+            break;
+        case 6: // todo DE GAME SCREEN
+            pages.DeGamePage.onEvent();
+            break;
     }
 };
 
@@ -111,7 +139,7 @@ bool Game::onRender(void)
         case 8: // todo PLAYER INIT SCREEN
             if(pages.PlayerInitPage.onRender(renderer, 250,100, 224, 255) != true) return false;
             break;
-        case 6: // todo DE gAME SCREEN
+        case 6: // todo DE GAME SCREEN
             if(pages.DeGamePage.onRender(renderer, 10,50, 24, 255) != true) return false;
             break;
     }
@@ -127,17 +155,76 @@ void Game::onLoop(void)
     // todo : each page handle their loop code
     switch (activePage)
     {
-    case 0:
-        // todo : run the startPage.onLoop()
-        break;
-    
-    default:
-        break;
+        case 0: // todo START SCREEN
+            // a switch statement for loading that inits all other pages
+            switch (loading)
+            {
+                case 0:
+                    // todo: Initialise HOME SCREEN
+                    break;
+                case 1:
+                    // todo: Initialise EXIT SCREEN
+                    break;
+                case 2:
+                    // todo: Initialise HOF SCREEN
+                    break;
+                case 3:
+                    // todo: Initialise HELP SCREEN
+                    break;
+                case 4:
+                    // todo: Initialise CREDITS SCREEN
+                    break;
+                case 5:
+                    // todo: Initialise PLAY INIT SCREEN
+                    break;
+                case 6:
+                    // todo: Initialise PLAYER INIT SCREEN
+                    break;
+                case 7:
+                    // todo: Initialise DE GAME SCREEN
+                    break;
+            }
+            pages.StartPage.onLoop(); // increase the loading ++
+            break;
+
+        case 1: // todo HOME SCREEN
+            pages.HomePage.onLoop();
+            break;
+        case 2: // todo EXIT SCREEN
+            pages.ExitPage.onLoop();
+            break;
+        case 3: // todo HOF SCREEN
+            pages.HofPage.onLoop();
+            break;
+        case 4: // todo HELP SCREEN
+            pages.HelpPage.onLoop();
+            break;
+        case 5: // todo CREDITS SCREEN
+            pages.CreditsPage.onLoop();
+            break;
+        case 7: // todo PLAY INIT SCREEN
+            pages.PlayMenuPage.onLoop();
+            break;
+        case 8: // todo PLAYER INIT SCREEN
+            pages.PlayerInitPage.onLoop();
+            break;
+        case 6: // todo DE GAME SCREEN
+            pages.DeGamePage.onLoop();
+            break;
     }
 };
 
 void Game::onCleanup(void)
 {
+    pages.StartPage.onCleanup();
+    pages.HomePage.onCleanup();
+    pages.ExitPage.onCleanup();
+    pages.HofPage.onCleanup();
+    pages.HelpPage.onCleanup();
+    pages.CreditsPage.onCleanup();
+    pages.PlayerInitPage.onCleanup();
+    pages.PlayMenuPage.onCleanup();
+    pages.DeGamePage.onCleanup();
     SDL_DestroyWindow(window);
     SDL_FreeSurface(surface);
     SDL_Quit();

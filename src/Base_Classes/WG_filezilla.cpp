@@ -17,6 +17,11 @@ Filezilla<T>::Filezilla()
     filePath = "";
 };
 
+/**
+ * read added data to a specified file
+ * 
+ * @return 0 on success
+*/
 template<typename T>
 int Filezilla<T>::read()
 {
@@ -31,6 +36,11 @@ int Filezilla<T>::read()
     return 0;
 };
 
+/**
+ * write added data to a specified file
+ * 
+ * @return 0 on success
+*/
 template<typename T>
 int Filezilla<T>::write()
 {

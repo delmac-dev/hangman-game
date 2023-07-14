@@ -38,3 +38,8 @@ void Screen::onLoop(void)
     // todo : code that run on every loop eg. animation
 };
 
+void Screen::onCleanup(void)
+{
+    // todo : code that run on every loop eg. animation
+};
+
