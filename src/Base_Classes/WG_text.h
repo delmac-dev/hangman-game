@@ -23,7 +23,7 @@ class Text: public Entity
 
     public:
         Text();
-        int Init(SDL_Renderer* renderer ,string text,string path,int size,SDL_Color color,int posX,int posY);
+        int Init(SDL_Renderer* renderer,string text,string path,int size,SDL_Color color);
         int Render();
         ~Text();
 };

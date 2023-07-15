@@ -1,16 +1,21 @@
-#if !defined(_WG_SCREEN_H_)
-#define _WG_SCREEN_H_
+#if !defined(WG_SCREEN_H)
+#define WG_SCREEN_H
 
 #include <SDL2/SDL.h>
 
 class Screen
 {
+    protected:
+        SDL_Renderer* screenRenderer;
+        SDL_Event* screenEvents;
+
     public:
-        virtual void onInit(void);
+        Screen();
+        virtual void onInit(SDL_Renderer* renderer, SDL_Event* events);
         virtual void onEvent(void);
         virtual void onLoop(void);
-        virtual bool onRender(SDL_Renderer* renderer, int r, int g, int b, int a);
+        virtual bool onRender(int r, int g, int b, int a);
         virtual void onCleanup(void);
 };
 
-#endif // _WG_SCREEN_H_
+#endif // WG_SCREEN_H

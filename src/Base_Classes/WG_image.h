@@ -19,7 +19,7 @@ class Image: public Entity
 
     public:
         Image();
-        int Init(SDL_Renderer* renderer, string path, int posX, int posY, int width, int imgWidth, int imgHeight);
+        int Init(SDL_Renderer* renderer, string path, int width, int imgW, int imgH);
         int Render();
         ~Image();
 };

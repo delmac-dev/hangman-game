@@ -33,6 +33,8 @@ int Filezilla<T>::read()
 
     dataList = temp;
 
+    if(dataList.size() == 0) return 1;
+
     return 0;
 };
 

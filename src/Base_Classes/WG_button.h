@@ -1,6 +1,8 @@
 #if !defined(WG_BUTTON_H)
 #define WG_BUTTON_H
 
+#define HEIGHT 24
+
 #include <iostream>
 #include <SDL2/SDL.h>
 
@@ -18,25 +20,25 @@ class Button : public Entity
         Image textureBackground;
         Image textureIcon;
         SDL_Renderer* buttonRenderer;
-        SDL_Event* event;
         SDL_Rect container;
         bool hasBackground;
         bool hasText;
         bool hasIcon;
+        bool hasRefPoint;
 
     public:
-        Button(SDL_Renderer* renderer,SDL_Event* e, int posX, int posY, int height, int width);
-        void addBackground(string path);
-        void addBackground(string path, int imgWidth, int imgHeight);
-        void addIcon(string path, string position, int width, int imgWidth, int imgHeight);
-        void addText(string text, string path, SDL_Color color, int size, string position);
-        void render();
+        Button();
+        int Init(SDL_Renderer* r, int h, int w);
+        void addBackground(string path, int imgW, int imgH);
+        void addBackground(string path, int width,int imgW, int imgH);
+        void addIcon(string path, int width, int imgW, int imgH);
+        int addText(string text, string path, SDL_Color color, int size);
+        int Render(void);
 
         int verifyEvent(int mouseX, int mouseY);
 
-        int onClick(int mouseX, int mouseY, int rValue);
+        int onClick(int, int, int);
         int onMouseOver(int mouseX, int mouseY, int rValue);
-        int onKeyPressed(int key, int rValue);
         
         ~Button();
 };

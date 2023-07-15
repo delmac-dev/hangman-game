@@ -1,12 +1,44 @@
 #if !defined(WG_ENTITY_H)
 #define WG_ENTITY_H
 
-struct Entity
+class Entity
 {
-    int positionX;
-    int positionY;
-    int clientHeight;
-    int clientWidth;
+    private:
+        int clientX;
+        int clientY;
+        int clientHeight;
+        int clientWidth;
+        int referenceX;
+        int referenceY;
+        int referenceHeight;
+        int referenceWidth;
+        bool hasRefPoint;
+
+    protected:
+        int getClientX();
+        int getClientY();
+        int getClientH();
+        int getClientW();
+        int getRefX();
+        int getRefY();
+        int getRefH();
+        int getRefW();
+        void setClientX(int);
+        void setClientY(int);
+        void setClientH(int);
+        void setClientW(int);
+        void setRefX(int);
+        void setRefY(int);
+        void setRefH(int);
+        void setRefW(int);
+    
+    public:
+        int setReference(int x, int y, int w, int h);
+        int setPosition(int x, int y);
+        int setCenter(void);
+        int setCenterX(int y);
+        int setCenterY(int x);
+    
 };
 
 #endif // WG_ENTITY_H

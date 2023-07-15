@@ -7,6 +7,7 @@
 #include "screens.h"
 #include "models.h"
 #include "WG_filezilla.h"
+#include "WG_image.h"
 
 using std::string;
 
@@ -33,16 +34,18 @@ class Game
         bool isRunning;
         int loading;
         bool loaded;
+        Image bgImage;
 
         SDL_Window* window;
         SDL_Surface* surface;
         SDL_Renderer* renderer;
+        SDL_Event events;
     
     public:
         Game(void);
         int onExecute(void);
-        bool onInit(void);
-        void onEvent(SDL_Event* event);
+        int onInit(void);
+        void onEvent();
         bool onRender(void);
         void onLoop(void);
         void onCleanup(void);
