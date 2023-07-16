@@ -7,9 +7,9 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${fileDirname}/*.cpp",
-                "${fileDirname}/Base_Classes/*.cpp",
-                "${fileDirname}/Screens/*.cpp",
+                "${workspaceFolder}/src/*.cpp",
+                "${workspaceFolder}/src/Base_Classes/*.cpp",
+                "${workspaceFolder}/src/Screens/*.cpp",
                 "-I${workspaceFolder}\\src\\Base_Classes",
                 "-I${workspaceFolder}\\src\\Screens",
                 "-I${workspaceFolder}\\include",
@@ -21,6 +21,7 @@
                 "-lSDL2",
                 "-lSDL2_image",
                 "-lSDL2_ttf",
+                "-lSDL2_mixer",
                 "-o",
                 "${workspaceFolder}\\bin\\wgg.exe"
             ],

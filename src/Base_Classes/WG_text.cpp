@@ -49,12 +49,25 @@ int Text::Init(SDL_Renderer* renderer, string text, string path, int size, SDL_C
     }
     setClientH(fontSize + 10);
     setClientW(TTF_FontAscent(font)  * text.length());
+
+    if(createSurface() == 1) return 1;
+    if (createTexture() == 1) return 1;
+    return 0;
+};
+
+int Text::createSurface()
+{
     fontSurface = TTF_RenderText_Solid( font, SDL_const_cast(char*, fontText.c_str()), fontColor);
     if(fontSurface == NULL) {
         cout<< "FAULT CREATING SURFACE =>" << SDL_GetError()<<endl;
         return 1;
-    
     }
+
+    return 0;
+}
+
+int Text::createTexture()
+{
     fontTexture = SDL_CreateTextureFromSurface( fontRenderer, fontSurface);
     if(fontSurface == NULL) {
         cout<< "FAULT CREATING TEXTURE =>" << SDL_GetError()<<endl;
@@ -62,7 +75,18 @@ int Text::Init(SDL_Renderer* renderer, string text, string path, int size, SDL_C
     }
     SDL_FreeSurface( fontSurface);
     return 0;
-};
+}
+
+int Text::changeText( string text)
+{
+    fontText = text;
+    setClientW(TTF_FontAscent(font)  * text.length());
+    SDL_DestroyTexture(fontTexture);
+    createSurface();
+    createTexture();
+
+    return 0;
+}
 
 int Text::Render()
 {

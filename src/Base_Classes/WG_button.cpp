@@ -14,6 +14,8 @@ Button::Button()
     hasIcon = false;
     hasRefPoint = false;
     buttonRenderer = 0;
+    activeBg = 0;
+    activeIcon = 0;
 }
 
 /**
@@ -40,26 +42,45 @@ int Button::Init(SDL_Renderer* r, int h, int w)
 void Button::addBackground(string path, int imgW, int imgH)
 {
     hasBackground = true;
-    textureBackground.Init( buttonRenderer, path, getClientW(), imgW, imgH);
-    textureBackground.setReference(getClientX(), getClientY(), getClientW(), getClientH());
-    textureBackground.setCenter();
+    textureBg.push_back(new Image);
+    textureBg.back()->Init(buttonRenderer, path, getClientW(), imgW, imgH);
+    textureBg.back()->setReference(getClientX(), getClientY(), getClientW(), getClientH());
+    textureBg.back()->setCenter();
 };
 
 void Button::addBackground(string path, int width,int imgW, int imgH)
 {
     hasBackground = true;
-    textureBackground.Init( buttonRenderer, path, width, imgW, imgH);
-    textureBackground.setReference(getClientX(), getClientY(), getClientW(), getClientH());
-    textureBackground.setCenter();
+    textureBg.push_back(new Image);
+    textureBg.back()->Init(buttonRenderer, path, width, imgW, imgH);
+    textureBg.back()->setReference(getClientX(), getClientY(), getClientW(), getClientH());
+    textureBg.back()->setCenter();
 };
+
+int Button::switchBgIndex(int i)
+{
+    if(i >= 0 && i <= (textureBg.size()-1)) activeBg = i;
+    else return 1;
+
+    return 0;
+}
 
 void Button::addIcon(string path, int width, int imgW, int imgH)
 {
     hasIcon = true;
-    textureIcon.Init( buttonRenderer, path, width, imgW, imgH);
-    textureIcon.setReference(getClientX(), getClientY(), getClientW(), getClientH());
-    textureIcon.setCenter();
+    textureIcon.push_back(new Image);
+    textureIcon.back()->Init( buttonRenderer, path, width, imgW, imgH);
+    textureIcon.back()->setReference(getClientX(), getClientY(), getClientW(), getClientH());
+    textureIcon.back()->setCenter();
 };
+
+int Button::switchIconIndex(int i)
+{
+    if(i >= 0 && i <= (textureIcon.size()-1)) activeIcon = i;
+    else return 1;
+
+    return 0;
+}
 
 int Button::addText(string text, string path,SDL_Color color, int size)
 {
@@ -72,9 +93,9 @@ int Button::addText(string text, string path,SDL_Color color, int size)
 
 int Button::Render(void)
 {
-    if(hasBackground) textureBackground.Render();
+    if(hasBackground) textureBg[activeBg]->Render();
 
-    if(hasIcon) textureIcon.Render();
+    if(hasIcon) textureIcon[activeIcon]->Render();
     
     if(hasText) textureText.Render();
 
@@ -99,16 +120,15 @@ int Button::verifyEvent(int mouseX, int mouseY)
  * 
  * @param mouseX the x position of the event
  * @param mouseY the y position of the event
- * @param r specified return value you want to listen to
  * 
- * @return default return value is 0 DON'T LISTEN FOR IT
+ * @return 0 if true and 1 if false
  * 
 */
-int Button::onClick(int mouseX, int mouseY, int r)
+int Button::onClick(int mouseX, int mouseY)
 {
-    if(verifyEvent(mouseX, mouseY) != 0) return 0; 
+    if(verifyEvent(mouseX, mouseY) != 0) return 1; 
 
-    return r;
+    return 0;
 }
 
 /**
@@ -116,21 +136,16 @@ int Button::onClick(int mouseX, int mouseY, int r)
  * 
  * @param mouseX the x position of the event
  * @param mouseY the y position of the event
- * @param r specified return value you want to listen to
  * 
- * @return default return value is 0 DON'T LISTEN FOR IT
+ * @return 0 if true and 1 if false
  * 
 */
-int Button::onMouseOver(int mouseX, int mouseY, int rValue)
+int Button::onMouseOver(int mouseX, int mouseY)
 {
-    if(verifyEvent(mouseX, mouseY) != 0) return 0; 
+    if(verifyEvent(mouseX, mouseY) != 0) return 1; 
 
-    return rValue;
+    return 0;
 }
 
 Button::~Button()
-{
-    // textureText.~Text();
-    // textureIcon.~Image();
-    // textureBackground.~Image();
-};
+{};

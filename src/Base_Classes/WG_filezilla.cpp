@@ -14,7 +14,6 @@ Filezilla<T>::Filezilla()
 {
     size = 0;
     isModified = false;
-    filePath = "";
 };
 
 /**
@@ -26,6 +25,7 @@ template<typename T>
 int Filezilla<T>::read()
 {
     fstream file(filePath, ios::in | ios::binary);
+    if(!file) return false;
     file.read((char*) &size, sizeof(int));
     temp.resize(4);
     file.read((char*) &temp, temp.size()*sizeof(T));
@@ -92,7 +92,7 @@ void Filezilla<T>::setPath(string path)
 };
 
 template<typename T>
-vector<T> Filezilla<T>::getVal()
+vector<T> Filezilla<T>::getData()
 {
     return dataList;
 };

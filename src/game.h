@@ -8,6 +8,7 @@
 #include "models.h"
 #include "WG_filezilla.h"
 #include "WG_image.h"
+#include "WG_audio.h"
 
 using std::string;
 
@@ -21,6 +22,7 @@ class Game
         string level;
         string playerName;
         string hiddenWord;
+        string assertPath;
 
         Filezilla<Model_Word> Word_Cluster;
         Filezilla<Model_Players> Player_Cluster;
@@ -40,6 +42,7 @@ class Game
         SDL_Surface* surface;
         SDL_Renderer* renderer;
         SDL_Event events;
+        Audio gameSounds;
     
     public:
         Game(void);

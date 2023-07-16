@@ -20,10 +20,12 @@ class Text: public Entity
         SDL_Texture* fontTexture;
         SDL_Renderer* fontRenderer;
         SDL_Rect container;
-
+        int createSurface();
+        int createTexture();
     public:
         Text();
         int Init(SDL_Renderer* renderer,string text,string path,int size,SDL_Color color);
+        int changeText(string text);
         int Render();
         ~Text();
 };

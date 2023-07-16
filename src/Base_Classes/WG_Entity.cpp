@@ -139,3 +139,47 @@ int Entity::setCenterY(int x)
 
     return 0;
 };
+
+int Entity::setTopRight(int x = 20, int y = 20)
+{
+    if (!hasRefPoint) return 1;
+    int calx = getRefX() + x;
+    int caly = getRefY() + y;
+
+    setPosition(calx, caly);
+
+    return 0;
+};
+
+int Entity::setTopLeft(int x = 20, int y = 20)
+{
+    if (!hasRefPoint) return 1;
+    int calx = getRefW() - (getClientW() + x);
+    int caly = getRefY() + y;
+
+    setPosition(calx, caly);
+
+    return 0;
+};
+
+int Entity::setBottomLeft(int x = 20, int y = 20)
+{
+    if (!hasRefPoint) return 1;
+    int calx = getRefW() - (getClientW() + x);
+    int caly = getRefH() - (getClientH() + y);
+
+    setPosition(calx, caly);
+
+    return 0;
+};
+
+int Entity::setBottomRight(int x = 20, int y = 20)
+{
+    if (!hasRefPoint) return 1;
+    int calx = getRefX() + x;
+    int caly = getRefW() - (getClientH() + y);
+
+    setPosition(calx, caly);
+
+    return 0;
+};

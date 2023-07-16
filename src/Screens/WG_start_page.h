@@ -9,7 +9,6 @@
 class WG_Start_Page: public Screen
 {
     private:
-        int* activeScreen;
         Image bgImage;
         Text title0;
         Text title1;
@@ -17,8 +16,8 @@ class WG_Start_Page: public Screen
         Text para1;
 
     public:
-        void onInit(SDL_Renderer* renderer, SDL_Event* events, int w, int h);
-        void onEvent(void);
+        void onInit(SDL_Renderer* renderer,Audio* sounds, int w, int h, int* ascreen);
+        void onEvent(SDL_Event event);
         void onLoop(void);
         bool onRender();
         void onCleanup(void);

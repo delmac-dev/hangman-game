@@ -38,7 +38,10 @@ class Entity
         int setCenter(void);
         int setCenterX(int y);
         int setCenterY(int x);
-    
+        int setTopRight(int x, int y);
+        int setTopLeft(int x, int y);
+        int setBottomRight(int x, int y);
+        int setBottomLeft(int x, int y);
 };
 
 #endif // WG_ENTITY_H

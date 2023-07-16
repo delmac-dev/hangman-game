@@ -2,20 +2,18 @@
 #define WG_SCREEN_H
 
 #include <SDL2/SDL.h>
+#include "WG_audio.h"
 
 class Screen
 {
     protected:
+        int* activeScreen;
         SDL_Renderer* screenRenderer;
-        SDL_Event* screenEvents;
+        Audio* gameSounds;
 
     public:
         Screen();
-        virtual void onInit(SDL_Renderer* renderer, SDL_Event* events);
-        virtual void onEvent(void);
-        virtual void onLoop(void);
-        virtual bool onRender(int r, int g, int b, int a);
-        virtual void onCleanup(void);
+        void changeScreen(int i);
 };
 
 #endif // WG_SCREEN_H
