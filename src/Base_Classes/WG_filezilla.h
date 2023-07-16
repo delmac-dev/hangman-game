@@ -22,7 +22,7 @@ class Filezilla
         int write(void);
         int read();
         int add(T data);
-        int addQueue(vector<T>* data);
+        int addQueue(vector<T> data);
         void setPath(string path);
         vector<T> getData();
 };

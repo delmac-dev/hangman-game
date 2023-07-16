@@ -124,8 +124,9 @@ int Entity::setCenterX(int y)
 {
     if (!hasRefPoint) return 1;
     int x = (( getRefW() - getClientW())/ 2) + getRefX();
+    int tempy = getRefY() + y;
 
-    setPosition(x, y);
+    setPosition(x, tempy);
 
     return 0;
 };
@@ -133,9 +134,10 @@ int Entity::setCenterX(int y)
 int Entity::setCenterY(int x)
 {
     if (!hasRefPoint) return 1;
+    int tempx = getRefX() + x;
     int y = (( getRefH() - getClientH())/ 2) + getRefY();
 
-    setPosition(x, y);
+    setPosition(tempx, y);
 
     return 0;
 };

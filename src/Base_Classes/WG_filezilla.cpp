@@ -25,9 +25,9 @@ template<typename T>
 int Filezilla<T>::read()
 {
     fstream file(filePath, ios::in | ios::binary);
-    if(!file) return false;
+    if(!file) return 1;
     file.read((char*) &size, sizeof(int));
-    temp.resize(4);
+    temp.resize(size);
     file.read((char*) &temp, temp.size()*sizeof(T));
     file.close();
 
@@ -59,28 +59,18 @@ int Filezilla<T>::write()
 template<typename T>
 int Filezilla<T>::add( T data)
 {
-    try{
-        dataList.push_back(data);
-    }catch(...) {
-        return -1;
-    }
-
+    dataList.push_back(data);
+    !isModified ? isModified = true : continue;
     return 0;
 };
 
 template<typename T>
-int Filezilla<T>::addQueue(vector<T>* data)
+int Filezilla<T>::addQueue(vector<T> data)
 {
-    try
-    {
-        for(auto i : *data)
-            dataList.push_back(i);
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-        return 1;
-    }
+    for(auto i : data)
+        dataList.push_back(i);
+
+    !isModified ? isModified = true : continue;
 
     return 0;
 };

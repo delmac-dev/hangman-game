@@ -89,11 +89,11 @@ void WG_Home_Page::onEvent(SDL_Event event)
         {
             int x, y;
             SDL_GetMouseState(&x, &y);
-            if(startGameButton.onClick(x, y) == 0) cout<<"start button hover"<<endl;
+            if(startGameButton.onClick(x, y) == 0) changeScreen(2);
             if(HofButton.onClick(x, y) == 0) changeScreen(3);
-            if(helpButton.onClick(x, y) == 0) cout<<"help button hover"<<endl;
-            if(creditsButton.onClick(x, y) == 0) cout<<"credits button hover"<<endl;
-            if(exitButton.onClick(x, y) == 0) cout<<"exit button hover"<<endl;
+            if(helpButton.onClick(x, y) == 0) changeScreen(4);
+            if(creditsButton.onClick(x, y) == 0) changeScreen(5);
+            if(exitButton.onClick(x, y) == 0) changeScreen(6);
         }
     }
 };

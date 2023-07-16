@@ -2,7 +2,6 @@
 #define _SCREENS_H_
 
 #include "WG_home_page.h"
-#include "WG_exit_page.h"
 #include "WG_player_page.h"
 #include "WG_credits_page.h"
 #include "WG_play_page.h"
@@ -14,7 +13,6 @@
 struct Screens
 {
     WG_Start_Page StartPage;
-    WG_Exit_Page ExitPage;
     WG_Home_Page HomePage;
     WG_HoF_Page HofPage;
     WG_Help_Page HelpPage;

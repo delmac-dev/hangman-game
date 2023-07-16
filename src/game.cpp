@@ -42,8 +42,13 @@ int Game::onInit(void)
         cout<<SDL_GetError()<<endl;
         return false;
     };
+    Word_Cluster.setPath("C:\\Users\\Delmac\\Desktop\\Kill_Shot\\data\\data.dat");
+    vector<Model_Word> words = {{"rouipl", "easy"}, {"rouipl", "easy"},{"rouipl", "easy"},{"rouipl", "easy"},{"rouipl", "easy"}};
+    Word_Cluster.addQueue(words);
+    if(Word_Cluster.read() != 0) cout<<"file read wrong"<<endl;
+    for(auto i : Word_Cluster.getData())
+        cout<<i.word<<endl;
 
-    Word_Cluster.read();
     Player_Cluster.read();
     Setting_Cluster.read();
     GameData_Cluster.read();
@@ -54,6 +59,11 @@ int Game::onInit(void)
     pages.StartPage.onInit( renderer, &gameSounds, WG_WIDTH, WG_HEIGHT, &activePage);
     pages.HomePage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
     pages.HofPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
+    pages.PlayMenuPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
+    pages.HelpPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
+    pages.CreditsPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
+    pages.PlayerInitPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
+    pages.DeGamePage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
 
     return 0;
 };
@@ -70,7 +80,7 @@ int Game::onExecute(void)
         {
             onEvent();
         }
-        if(onRender() == false) cout<<SDL_GetError()<<endl;
+        onRender();
         onLoop();
     }
 
@@ -90,8 +100,26 @@ void Game::onEvent()
         case 1:
             pages.HomePage.onEvent(events);
             break;
+        case 2:
+            pages.PlayMenuPage.onEvent(events);
+            break;
         case 3:
             pages.HofPage.onEvent(events);
+            break;
+        case 4:
+            pages.HelpPage.onEvent(events);
+            break;
+        case 5:
+            pages.CreditsPage.onEvent(events);
+            break;
+        case 6:
+            isRunning = false;
+            break;
+        case 7:
+            pages.PlayerInitPage.onEvent(events);
+            break;
+        case 8:
+            pages.DeGamePage.onEvent(events);
             break;
     }
 };
@@ -107,8 +135,23 @@ bool Game::onRender(void)
         case 1:
             pages.HomePage.onRender();
             break;
+        case 2:
+            pages.PlayMenuPage.onRender();
+            break;
         case 3:
             pages.HofPage.onRender();
+            break;
+        case 4:
+            pages.HelpPage.onRender();
+            break;
+        case 5:
+            pages.CreditsPage.onRender();
+            break;
+        case 7:
+            pages.PlayerInitPage.onRender();
+            break;
+        case 8:
+            pages.DeGamePage.onRender();
             break;
     }
     SDL_RenderPresent(renderer);
@@ -130,7 +173,12 @@ void Game::onCleanup(void)
 {
     pages.StartPage.onCleanup();
     pages.HomePage.onCleanup();
+    pages.PlayMenuPage.onCleanup();
     pages.HofPage.onCleanup();
+    pages.HelpPage.onCleanup();
+    pages.CreditsPage.onCleanup();
+    pages.PlayerInitPage.onCleanup();
+    pages.DeGamePage.onCleanup();
     SDL_DestroyWindow(window);
     SDL_FreeSurface(surface);
     SDL_Quit();
