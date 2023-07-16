@@ -81,14 +81,10 @@ bool WG_HoF_Page::onRender(void)
 
 void WG_HoF_Page::onEvent(SDL_Event event)
 {
-    int x, y;
-    if (event.type == SDL_MOUSEMOTION)
-    {
-        SDL_GetMouseState(&x, &y);
-    }
-
     if(event.type == SDL_MOUSEBUTTONDOWN)
     {
+        int x, y;
+        SDL_GetMouseState(&x, &y);
         if(event.button.button == SDL_BUTTON_LEFT)
         {
             if(backButton.onClick(x, y) == 0) changeScreen(1);

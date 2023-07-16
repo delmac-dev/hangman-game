@@ -83,23 +83,17 @@ bool WG_Home_Page::onRender(void)
 
 void WG_Home_Page::onEvent(SDL_Event event)
 {
-    cout<<"before"<<endl;
-    int xi = 0 , yi = 0;
-    cout<<xi<<" "<<yi<<endl;
-    if(SDL_MOUSEMOTION == event.type)
-    {
-        SDL_GetMouseState(&xi, &yi);
-    }
     if (event.type == SDL_MOUSEBUTTONDOWN)
     {
         if(event.button.button = SDL_BUTTON_LEFT)
         {
-            if(startGameButton.onClick(xi, yi) == 0) cout<<"start button hover"<<endl;
-            if(HofButton.onClick(xi, yi) == 0) changeScreen(3);
-            if(helpButton.onClick(xi, yi) == 0) cout<<"help button hover"<<endl;
-            if(creditsButton.onClick(xi, yi) == 0) cout<<"credits button hover"<<endl;
-            if(exitButton.onClick(xi, yi) == 0) cout<<"exit button hover"<<endl;
-            cout<<xi<<" "<<yi<<endl;
+            int x, y;
+            SDL_GetMouseState(&x, &y);
+            if(startGameButton.onClick(x, y) == 0) cout<<"start button hover"<<endl;
+            if(HofButton.onClick(x, y) == 0) changeScreen(3);
+            if(helpButton.onClick(x, y) == 0) cout<<"help button hover"<<endl;
+            if(creditsButton.onClick(x, y) == 0) cout<<"credits button hover"<<endl;
+            if(exitButton.onClick(x, y) == 0) cout<<"exit button hover"<<endl;
         }
     }
 };
