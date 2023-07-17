@@ -16,15 +16,10 @@ using std::cin;
 
 Game::Game()
 {
-    score = 0;
-    attempts = 0;
-    lives =0;
-    wordCount = 0;
     activePage = 0;
     assertPath = "C:\\Users\\Delmac\\Desktop\\Kill_Shot\\asserts\\";
+    dataPath = "C:\\Users\\Delmac\\Desktop\\Kill_Shot\\data\\";
     isRunning = true;
-    loading = 0;
-    loaded = false;
     window = NULL;
     renderer = NULL;
     surface = NULL;
@@ -42,16 +37,6 @@ int Game::onInit(void)
         cout<<SDL_GetError()<<endl;
         return false;
     };
-    Word_Cluster.setPath("C:\\Users\\Delmac\\Desktop\\Kill_Shot\\data\\data.dat");
-    vector<Model_Word> words = {{"rouipl", "easy"}, {"rouipl", "easy"},{"rouipl", "easy"},{"rouipl", "easy"},{"rouipl", "easy"}};
-    Word_Cluster.addQueue(words);
-    if(Word_Cluster.read() != 0) cout<<"file read wrong"<<endl;
-    for(auto i : Word_Cluster.getData())
-        cout<<i.word<<endl;
-
-    Player_Cluster.read();
-    Setting_Cluster.read();
-    GameData_Cluster.read();
 
     gameSounds.addSoundEffect(assertPath + "click1.ogg");
     gameSounds.addSoundEffect(assertPath + "click2.ogg");
@@ -59,7 +44,7 @@ int Game::onInit(void)
     pages.StartPage.onInit( renderer, &gameSounds, WG_WIDTH, WG_HEIGHT, &activePage);
     pages.HomePage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
     pages.HofPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
-    pages.PlayMenuPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
+    pages.PlayMenuPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage, &GameData, &activeButtonID, &activePlayerID);
     pages.HelpPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
     pages.CreditsPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
     pages.PlayerInitPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
@@ -80,8 +65,8 @@ int Game::onExecute(void)
         {
             onEvent();
         }
-        onRender();
         onLoop();
+        onRender();
     }
 
     onCleanup();
@@ -163,8 +148,8 @@ void Game::onLoop(void)
 {
     switch (activePage)
     {
-        case 0:
-            pages.StartPage.onLoop();
+        case 2:
+            pages.PlayMenuPage.onLoop();
             break;
     }
 };

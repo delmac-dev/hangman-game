@@ -15,27 +15,19 @@ using std::string;
 class Game
 {
     private:
-        int score;
-        int attempts;
-        int lives;
-        int wordCount;
-        string level;
-        string playerName;
-        string hiddenWord;
         string assertPath;
-
+        string dataPath;
         Filezilla<Model_Word> Word_Cluster;
         Filezilla<Model_Players> Player_Cluster;
-        Filezilla<Model_Settings> Setting_Cluster;
-        Filezilla<Model_Game_Data> GameData_Cluster;
+        Filezilla<Model_Game_Data> GameData;
 
         int windowHeight;
         int windowWidth;
         int activePage;
+        int activeButtonID;
+        int activePlayerID;
         Screens pages;
         bool isRunning;
-        int loading;
-        bool loaded;
         Image bgImage;
 
         SDL_Window* window;

@@ -15,7 +15,6 @@ class WG_Player_Page: public Screen
         Button startGameButton;
         Button backButton;
         Button quitButton;
-
     public:
         void onInit(SDL_Renderer* renderer,Audio* sounds, int w, int h, int* ascreen);
         void onEvent(SDL_Event event);

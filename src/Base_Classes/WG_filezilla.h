@@ -25,6 +25,7 @@ class Filezilla
         int addQueue(vector<T> data);
         void setPath(string path);
         vector<T> getData();
+        bool checkIsModified();
 };
 
 #endif // _FILEZILLA_H_

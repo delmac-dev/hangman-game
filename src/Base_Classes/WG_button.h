@@ -20,6 +20,7 @@ class Button : public Entity
         string iconPath;
         string backgroundPath;
         Text textureText;
+        int buttonID;
         vector<Image*> textureBg;
         vector<Image*> textureIcon;
         SDL_Renderer* buttonRenderer;
@@ -29,7 +30,6 @@ class Button : public Entity
         bool hasBackground;
         bool hasText;
         bool hasIcon;
-        bool hasRefPoint;
 
     public:
         Button();
@@ -46,6 +46,8 @@ class Button : public Entity
 
         int onClick(int mouseX, int mouseY);
         int onMouseOver(int mouseX, int mouseY);
+        void setButtonID(int i);
+        int getButtonID();
         
         ~Button();
 };

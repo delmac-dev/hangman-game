@@ -7,6 +7,17 @@ using std::cout;
 using std::endl;
 using std::string;
 
+
+WG_Game_Page::WG_Game_Page()
+{
+    activePlayerId = 0;
+    hasPlayerIdSet = false;
+    score = 0;
+    attempts = 0;
+    lives =0;
+    wordCount = 0;
+}
+
 /**
  * Initialise the home screen of the game 
  * 
@@ -35,11 +46,11 @@ void WG_Game_Page::onInit(SDL_Renderer* renderer, Audio* sounds,int w, int h, in
     int bw = 190;
     int bh = 45;
     int bf = 16;
-    startGameButton.Init( renderer, bh, bw);
-    startGameButton.setReference( 0, 0, w, h);
-    startGameButton.setCenterX(240);
-    startGameButton.addText("enjoy game", path + "future.ttf", white, bf);
-    startGameButton.addBackground(path + "red_button12.png", 190, 45);
+    pauseButton.Init( renderer, bh, bw);
+    pauseButton.setReference( 0, 0, w, h);
+    pauseButton.setBottomLeft(40, 40);
+    pauseButton.addText("pause", path + "future.ttf", white, bf);
+    pauseButton.addBackground(path + "red_button12.png", 190, 45);
 
     backButton.Init( renderer, bh, bw);
     backButton.setReference( 0, 0, w, h);
@@ -52,7 +63,7 @@ bool WG_Game_Page::onRender(void)
 {
     bgImage.Render();
     title0.Render();
-    startGameButton.Render();
+    pauseButton.Render();
     backButton.Render();
 };
 
@@ -64,7 +75,7 @@ void WG_Game_Page::onEvent(SDL_Event event)
         {
             int x, y;
             SDL_GetMouseState(&x, &y);
-            if(startGameButton.onClick(x, y) == 0) cout<<"start button hover"<<endl;
+            if(pauseButton.onClick(x, y) == 0) cout<<"paused"<<endl;
             if(backButton.onClick(x, y) == 0) changeScreen(1);
         }
     }
@@ -76,5 +87,10 @@ void WG_Game_Page::onLoop(void)
 void WG_Game_Page::onCleanup(void)
 {};
 
+void WG_Game_Page::setActivePlayer(int a)
+{
+    activePlayerId = a;
+    hasPlayerIdSet = true;
+}
 
 

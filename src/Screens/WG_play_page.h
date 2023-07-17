@@ -7,23 +7,33 @@
 #include "WG_text.h"
 #include "WG_image.h"
 #include "WG_button.h"
+#include "WG_filezilla.h"
+#include "models.h"
 
 class WG_Play_Page: public Screen
 {
     private:
+        bool dataModified;
+        bool notActive;
+        int maxSaves;
+        int* routeButtonID;
+        int* activePlayerID;
+        int refHeight;
+        int refWidth;
+        string assertsPath;
         Image bgImage;
         Text title0;
         Text title1;
-        Button newGameButton1;
-        Button newGameButton2;
-        Button newGameButton3;
-        Button newGameButton4;
+        vector<Button*> routeButtons;
         Button backButton;
+        Button startGameButton;
+        Filezilla<Model_Game_Data>* gameData;
 
-        // fututre list of buttons rather
+        void createRouteButtons(int ypos, int gap);
 
     public:
-        void onInit(SDL_Renderer* renderer,Audio* sounds, int w, int h, int* ascreen);
+        WG_Play_Page();
+        void onInit(SDL_Renderer* renderer,Audio* sounds, int w, int h, int* ascreen, Filezilla<Model_Game_Data>* gameD, int* bID, int*pID);
         void onEvent(SDL_Event event);
         void onLoop(void);
         bool onRender(void);

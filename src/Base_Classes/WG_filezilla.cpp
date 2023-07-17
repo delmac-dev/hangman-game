@@ -53,6 +53,8 @@ int Filezilla<T>::write()
     file.write((char*) &dataList, dataList.size()*sizeof(T));
     file.close();
     dataList.clear();
+    read();
+    isModified = false;
     return 0;
 };
 
@@ -60,7 +62,7 @@ template<typename T>
 int Filezilla<T>::add( T data)
 {
     dataList.push_back(data);
-    !isModified ? isModified = true : continue;
+    isModified = true;
     return 0;
 };
 
@@ -70,7 +72,7 @@ int Filezilla<T>::addQueue(vector<T> data)
     for(auto i : data)
         dataList.push_back(i);
 
-    !isModified ? isModified = true : continue;
+    isModified = true;
 
     return 0;
 };
@@ -85,4 +87,9 @@ template<typename T>
 vector<T> Filezilla<T>::getData()
 {
     return dataList;
+};
+template<typename T>
+bool Filezilla<T>::checkIsModified()
+{
+    return isModified;
 };

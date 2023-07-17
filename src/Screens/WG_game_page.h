@@ -10,17 +10,29 @@
 class WG_Game_Page: public Screen
 {
     private:
+        int score;
+        int attempts;
+        int lives;
+        int wordCount;
+        int activePlayerId;
+        bool hasPlayerIdSet;
+        string level;
+        string playerName;
+        string hiddenWord;
         Image bgImage;
         Text title0;
-        Button startGameButton;
+        vector<Button> letterButtons;
+        Button pauseButton;
         Button backButton;
 
     public:
+        WG_Game_Page();
         void onInit(SDL_Renderer* renderer,Audio* sounds, int w, int h, int* ascreen);
         void onEvent(SDL_Event event);
         void onLoop(void);
         bool onRender(void);
         void onCleanup(void);
+        void setActivePlayer(int a);
 
 
 };

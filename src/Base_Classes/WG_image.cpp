@@ -32,13 +32,13 @@ int Image::Init(SDL_Renderer* renderer, string path, int width, int imgW, int im
     
     imageSurface = IMG_Load(SDL_const_cast(char*, imagePath.c_str()));
     if(imageSurface == NULL) {
-    cout<< "FAULT CREATING SURFACE =>" << SDL_GetError()<<endl;
+    cout<< " imgae class FAULT CREATING SURFACE =>" << SDL_GetError()<<endl;
     return 1;
     }
 
     imageTexture = SDL_CreateTextureFromSurface( imageRenderer, imageSurface);
     if(imageTexture == NULL) {
-        cout<< "FAULT CREATING TEXTURE =>" << SDL_GetError()<<endl;
+        cout<< " image class FAULT CREATING TEXTURE =>" << SDL_GetError()<<endl;
         return 1;
     }
 

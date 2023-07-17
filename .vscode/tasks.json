@@ -10,6 +10,7 @@
                 "${workspaceFolder}/src/*.cpp",
                 "${workspaceFolder}/src/Base_Classes/*.cpp",
                 "${workspaceFolder}/src/Screens/*.cpp",
+                "-I${workspaceFolder}\\src",
                 "-I${workspaceFolder}\\src\\Base_Classes",
                 "-I${workspaceFolder}\\src\\Screens",
                 "-I${workspaceFolder}\\include",

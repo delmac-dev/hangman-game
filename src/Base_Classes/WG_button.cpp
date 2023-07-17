@@ -12,10 +12,10 @@ Button::Button()
     hasBackground = false;
     hasText = false;
     hasIcon = false;
-    hasRefPoint = false;
     buttonRenderer = 0;
     activeBg = 0;
     activeIcon = 0;
+    buttonID = -1;
 }
 
 /**
@@ -147,5 +147,18 @@ int Button::onMouseOver(int mouseX, int mouseY)
     return 0;
 }
 
+void Button::setButtonID(int i)
+{
+    buttonID = i;
+}
+
+int Button::getButtonID()
+{
+    return buttonID;
+}
+
 Button::~Button()
-{};
+{
+    textureBg.clear();
+    textureIcon.clear();
+};
