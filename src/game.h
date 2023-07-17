@@ -2,8 +2,8 @@
 #define _GAME_H_
 
 #include <iostream>
+#include <vector>
 #include <SDL2/SDL.h>
-
 #include "screens.h"
 #include "models.h"
 #include "WG_filezilla.h"
@@ -11,16 +11,17 @@
 #include "WG_audio.h"
 
 using std::string;
+using std::vector;
+
 
 class Game
 {
     private:
         string assertPath;
         string dataPath;
-        Filezilla<Model_Word> Word_Cluster;
-        Filezilla<Model_Players> Player_Cluster;
-        Filezilla<Model_Game_Data> GameData;
-
+        Filezilla<WG_Word> wordStore;
+        Filezilla<WG_Players> playerStore;
+        Filezilla<WG_Data> dataStore;
         int windowHeight;
         int windowWidth;
         int activePage;
@@ -29,7 +30,6 @@ class Game
         Screens pages;
         bool isRunning;
         Image bgImage;
-
         SDL_Window* window;
         SDL_Surface* surface;
         SDL_Renderer* renderer;

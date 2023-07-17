@@ -96,10 +96,10 @@ int Text::Render()
     return 0;
 };
 
-Text::~Text()
+void Text::cleanUp()
 {
     SDL_DestroyTexture(fontTexture);
-    if (font) TTF_CloseFont( font );
+    TTF_CloseFont( font );
     TTF_Quit();
     free(fontRenderer);
 }

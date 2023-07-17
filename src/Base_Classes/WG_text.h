@@ -27,7 +27,7 @@ class Text: public Entity
         int Init(SDL_Renderer* renderer,string text,string path,int size,SDL_Color color);
         int changeText(string text);
         int Render();
-        ~Text();
+        void cleanUp();
 };
 
 #endif // WG_TEXT_H

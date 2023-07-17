@@ -15,7 +15,6 @@ class Filezilla
     string filePath;
     int size;
     vector<T> dataList;
-    vector<T> temp;
 
     public:
         Filezilla();

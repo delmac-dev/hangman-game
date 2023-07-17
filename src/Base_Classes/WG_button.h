@@ -48,6 +48,7 @@ class Button : public Entity
         int onMouseOver(int mouseX, int mouseY);
         void setButtonID(int i);
         int getButtonID();
+        int upDateText(string text);
         
         ~Button();
 };

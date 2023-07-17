@@ -91,6 +91,15 @@ int Button::addText(string text, string path,SDL_Color color, int size)
     return 0;
 };
 
+int Button::upDateText(string text)
+{
+    if(!hasText) return 1;
+    textureText.changeText(text);
+    textureText.setCenter();
+
+    return 0;
+}
+
 int Button::Render(void)
 {
     if(hasBackground) textureBg[activeBg]->Render();
@@ -161,4 +170,5 @@ Button::~Button()
 {
     textureBg.clear();
     textureIcon.clear();
+    if(hasText) textureText.cleanUp();
 };

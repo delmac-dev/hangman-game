@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <SDL2/SDL.h>
 
 #include "game.h"
@@ -7,12 +8,17 @@
 #include "WG_filezilla.cpp"
 #include "WG_audio.h"
 
+#define WG_HEIGHT 640
+#define WG_WIDTH 640
+
 using std::cout;
 using std::endl;
 using std::cin;
-
-#define WG_HEIGHT 640
-#define WG_WIDTH 640
+using std::string;
+using std::vector;
+using std::fstream;
+using std::ios;
+using std::to_string;
 
 Game::Game()
 {
@@ -23,6 +29,8 @@ Game::Game()
     window = NULL;
     renderer = NULL;
     surface = NULL;
+    activeButtonID = 0;
+    activePlayerID = 0;
 };
 
 int Game::onInit(void)
@@ -38,13 +46,21 @@ int Game::onInit(void)
         return false;
     };
 
+    wordStore.setPath(dataPath + "words.dat");
+    playerStore.setPath(dataPath + "players.dat");
+    dataStore.setPath(dataPath + "data.dat");
+
+    wordStore.read();
+    playerStore.read();
+    dataStore.read();
+
     gameSounds.addSoundEffect(assertPath + "click1.ogg");
     gameSounds.addSoundEffect(assertPath + "click2.ogg");
 
     pages.StartPage.onInit( renderer, &gameSounds, WG_WIDTH, WG_HEIGHT, &activePage);
     pages.HomePage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
     pages.HofPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
-    pages.PlayMenuPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage, &GameData, &activeButtonID, &activePlayerID);
+    pages.PlayMenuPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage, &activeButtonID, &activePlayerID);
     pages.HelpPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
     pages.CreditsPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
     pages.PlayerInitPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);

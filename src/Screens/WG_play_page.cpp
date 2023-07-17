@@ -27,18 +27,18 @@ WG_Play_Page:: WG_Play_Page()
  * @param gameD the game saved data
  * inother to be able to change screens;
 */
-void WG_Play_Page::onInit(SDL_Renderer* renderer, Audio* sounds,int w, int h, int* ascreen, Filezilla<Model_Game_Data>* gameD, int* bID, int* pID)
+void WG_Play_Page::onInit(SDL_Renderer* renderer, Audio* sounds,int w, int h, int* ascreen,int* bID, int* pID)
 {
     SDL_Color titleColor = {165, 42, 42, 255};
     SDL_Color white = {255, 255, 255, 255};
     screenRenderer = renderer;
     gameSounds = sounds;
     activeScreen = ascreen;
-    gameData = gameD;
     routeButtonID = bID;
     activePlayerID = pID;
     refWidth = w;
     refHeight = h;
+    // cout<<"from play menu "<<gameData->getData().size()<<endl;
 
     bgImage.Init( renderer, assertsPath + "gamebg5.png", w, 1024, 1024);
     bgImage.setPosition(0, 0);
@@ -49,12 +49,6 @@ void WG_Play_Page::onInit(SDL_Renderer* renderer, Audio* sounds,int w, int h, in
     title1.Init( renderer, "game", assertsPath + "future.ttf", 64, titleColor);
     title1.setReference(0, 0, refWidth, refHeight);
     title1.setCenterX(130);
-
-    // backButton.Init( renderer, 190, 45);
-    // backButton.setReference( 0, 0, w, h);
-    // backButton.setBottomRight(40, 40);
-    // backButton.addText("back", assertsPath + "future.ttf", white, 16);
-    // backButton.addBackground(assertsPath + "red_button12.png", 190, 45);
 
     backButton.Init( renderer, 45, 190);
     backButton.setReference( 0, 0, refWidth, refHeight);
@@ -86,10 +80,9 @@ void WG_Play_Page::createRouteButtons(int ypos, int gap)
         //         }
         //     }
         // }
-        routeButtons.back()->addText("", assertsPath + "future.ttf", color, 16);
+        routeButtons.back()->addText(text, assertsPath + "future.ttf", color, 16);
         routeButtons.back()->setButtonID(bID);
-
-        cout<<routeButtons.size();
+        routeButtons.back()->upDateText("hghjgj");
     }
 }
 

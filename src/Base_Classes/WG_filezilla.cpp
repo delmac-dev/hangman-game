@@ -5,6 +5,8 @@
 
 using std::vector;
 using std::fstream;
+using std::ifstream;
+using std::ofstream;
 using std::ios;
 using std::to_string;
 
@@ -24,17 +26,13 @@ Filezilla<T>::Filezilla()
 template<typename T>
 int Filezilla<T>::read()
 {
-    fstream file(filePath, ios::in | ios::binary);
-    if(!file) return 1;
-    file.read((char*) &size, sizeof(int));
-    temp.resize(size);
-    file.read((char*) &temp, temp.size()*sizeof(T));
-    file.close();
-
-    dataList = temp;
-
+    ifstream in(filePath, std::ios::in | std::ios::binary);
+    typename vector<T>::size_type size = 0;
+    in.read((char*)&size, sizeof(size));
+    dataList.resize(size);
+    in.read((char*)&dataList[0], dataList.size() * sizeof(T));
+    in.close();
     if(dataList.size() == 0) return 1;
-
     return 0;
 };
 
@@ -46,13 +44,11 @@ int Filezilla<T>::read()
 template<typename T>
 int Filezilla<T>::write()
 {
-    fstream file(filePath, ios::out | ios::binary);
-    if(file.fail()) return -1;
-    size = dataList.size(); 
-    file.write((char*) &size, sizeof(int));
-    file.write((char*) &dataList, dataList.size()*sizeof(T));
-    file.close();
-    dataList.clear();
+    ofstream out(filePath, std::ios::out | std::ios::binary);
+    typename vector<T>::size_type size = dataList.size();
+    out.write((char*)&size, sizeof(size));
+    out.write((char*)&dataList[0], dataList.size() * sizeof(T));
+    out.close();
     read();
     isModified = false;
     return 0;
@@ -88,6 +84,7 @@ vector<T> Filezilla<T>::getData()
 {
     return dataList;
 };
+
 template<typename T>
 bool Filezilla<T>::checkIsModified()
 {
