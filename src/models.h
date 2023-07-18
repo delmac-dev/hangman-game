@@ -18,7 +18,7 @@ struct WG_Data
     char level[20];
     int attempts;
     int wordCount;
-    int gamesPlayed;
+    int lives;
     char choosenWords[30]; 
     char hiddenWord[30];
     char wrongWords[30];

@@ -8,6 +8,7 @@
 #include "WG_image.h"
 #include "WG_button.h"
 #include "models.h"
+#include "WG_filezilla.h"
 
 class WG_Play_Page: public Screen
 {
@@ -24,7 +25,7 @@ class WG_Play_Page: public Screen
         Text title0;
         Text title1;
         vector<Button*> routeButtons;
-        // vector<WG_Data>* gameData; 
+        Filezilla<WG_Data>* gameData; 
         Button backButton;
         Button startGameButton;
 
@@ -32,7 +33,7 @@ class WG_Play_Page: public Screen
 
     public:
         WG_Play_Page();
-        void onInit(SDL_Renderer* renderer,Audio* sounds, int w, int h, int* ascreen, int* bID, int*pID);
+        void onInit(SDL_Renderer* renderer,Audio* sounds, Filezilla<WG_Data>* gameD,int w, int h, int* ascreen, int* bID, int*pID);
         void onEvent(SDL_Event event);
         void onLoop(void);
         bool onRender(void);

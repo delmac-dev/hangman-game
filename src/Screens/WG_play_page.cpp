@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "WG_Play_page.h"
+#include "WG_filezilla.cpp"
 
 using std::cout;
 using std::endl;
@@ -27,18 +28,18 @@ WG_Play_Page:: WG_Play_Page()
  * @param gameD the game saved data
  * inother to be able to change screens;
 */
-void WG_Play_Page::onInit(SDL_Renderer* renderer, Audio* sounds,int w, int h, int* ascreen,int* bID, int* pID)
+void WG_Play_Page::onInit(SDL_Renderer* renderer, Audio* sounds,Filezilla<WG_Data>* gameD,int w, int h, int* ascreen,int* bID, int* pID)
 {
     SDL_Color titleColor = {165, 42, 42, 255};
     SDL_Color white = {255, 255, 255, 255};
     screenRenderer = renderer;
     gameSounds = sounds;
+    gameData = gameD;
     activeScreen = ascreen;
     routeButtonID = bID;
     activePlayerID = pID;
     refWidth = w;
     refHeight = h;
-    // cout<<"from play menu "<<gameData->getData().size()<<endl;
 
     bgImage.Init( renderer, assertsPath + "gamebg5.png", w, 1024, 1024);
     bgImage.setPosition(0, 0);
@@ -52,8 +53,8 @@ void WG_Play_Page::onInit(SDL_Renderer* renderer, Audio* sounds,int w, int h, in
 
     backButton.Init( renderer, 45, 190);
     backButton.setReference( 0, 0, refWidth, refHeight);
-    backButton.setBottomRight(100, 40);
-    backButton.addText("backs", assertsPath + "future.ttf", white, 16);
+    backButton.setBottomRight(40, 40);
+    backButton.addText("back", assertsPath + "future.ttf", white, 16);
     backButton.addBackground(assertsPath + "red_button12.png", 190, 45);
 };
 
@@ -69,20 +70,19 @@ void WG_Play_Page::createRouteButtons(int ypos, int gap)
         routeButtons.back()->setReference(0, 0, refWidth, refHeight);
         routeButtons.back()->setCenterX(ypos + (gap * i) + (45 * i));
         routeButtons.back()->addBackground(assertsPath + "red_button12.png", 190, 45);
-        // if(gameData && gameData->getData().size() != 0)
-        // {
-        //     for(auto j : gameData->getData())
-        //     {
-        //         if( j.buttonID == i)
-        //         {
-        //             text = j.playerName;
-        //             bID = j.index;
-        //         }
-        //     }
-        // }
+        if(gameData && gameData->getData().size() != 0)
+        {
+            for(auto j : gameData->getData())
+            {
+                if( j.buttonID == i)
+                {
+                    text = j.playerName;
+                    bID = j.index;
+                }
+            }
+        }
         routeButtons.back()->addText(text, assertsPath + "future.ttf", color, 16);
         routeButtons.back()->setButtonID(bID);
-        routeButtons.back()->upDateText("hghjgj");
     }
 }
 
@@ -104,20 +104,20 @@ void WG_Play_Page::onEvent(SDL_Event event)
         {
             int x, y;
             SDL_GetMouseState(&x, &y);
-            // for(int i = 0; i < routeButtons.size(); i++)
-            // {
-            //     if(routeButtons[i].onClick(x, y) == 0)
-            //     {
-            //         if(routeButtons[i].getButtonID() == -1) {
-            //             *routeButtonID = i;
-            //             changeScreen(7);
-            //         }
-            //         else{
-            //             *activePlayerID = routeButtons[i].getButtonID();
-            //             changeScreen(8);
-            //         };
-            //     }
-            // }
+            for(int i = 0; i < routeButtons.size(); i++)
+            {
+                if(routeButtons[i]->onClick(x, y) == 0)
+                {
+                    if(routeButtons[i]->getButtonID() == -1) {
+                        *routeButtonID = i;
+                        changeScreen(7);
+                    }
+                    else{
+                        *activePlayerID = routeButtons[i]->getButtonID();
+                        changeScreen(8);
+                    };
+                }
+            }
             if(backButton.onClick(x, y) == 0) changeScreen(1);
         }
     }

@@ -50,6 +50,9 @@ int Game::onInit(void)
     playerStore.setPath(dataPath + "players.dat");
     dataStore.setPath(dataPath + "data.dat");
 
+    WG_Data d = {1, "jade", 0, 300, "hard", 5, 40, 2, "thedsf", "kikoo", "kls", "wksa"};
+    dataStore.add(d);
+    dataStore.write();
     wordStore.read();
     playerStore.read();
     dataStore.read();
@@ -57,10 +60,10 @@ int Game::onInit(void)
     gameSounds.addSoundEffect(assertPath + "click1.ogg");
     gameSounds.addSoundEffect(assertPath + "click2.ogg");
 
-    pages.StartPage.onInit( renderer, &gameSounds, WG_WIDTH, WG_HEIGHT, &activePage);
+    pages.StartPage.onInit( renderer, &gameSounds,WG_WIDTH, WG_HEIGHT, &activePage);
     pages.HomePage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
     pages.HofPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
-    pages.PlayMenuPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage, &activeButtonID, &activePlayerID);
+    pages.PlayMenuPage.onInit( renderer, &gameSounds, &dataStore ,WG_WIDTH, WG_HEIGHT, &activePage, &activeButtonID, &activePlayerID);
     pages.HelpPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
     pages.CreditsPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
     pages.PlayerInitPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
@@ -166,6 +169,9 @@ void Game::onLoop(void)
     {
         case 2:
             pages.PlayMenuPage.onLoop();
+            break;
+        case 7:
+            pages.PlayerInitPage.onLoop();
             break;
     }
 };

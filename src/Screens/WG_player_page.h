@@ -10,12 +10,27 @@
 class WG_Player_Page: public Screen
 {
     private:
+        bool dataModified;
+        bool notActive;
+        bool textUpdated;
+        int* routeButtonID;
+        int* activePlayerID;
+        int refHeight;
+        int refWidth;
+        string textInput;
+        string assertsPath;
         Image bgImage;
         Text title0;
-        Button startGameButton;
+        vector<string> letters;
+        Button inputField;
+        Button deleteButton;
+        Button proceedButton;
         Button backButton;
         Button quitButton;
+        vector<Button*> keyButtons;
+        void createKeyButtons(int tinr,int vypos, int cgap,int rgap, int bw, int bh);
     public:
+        WG_Player_Page();
         void onInit(SDL_Renderer* renderer,Audio* sounds, int w, int h, int* ascreen);
         void onEvent(SDL_Event event);
         void onLoop(void);

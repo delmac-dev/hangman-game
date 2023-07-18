@@ -5,12 +5,10 @@ using std::string;
 
 int Entity::getClientX()
 {
-    if(!hasRefPoint) return 0;
     return clientX;
 };
 int Entity::getClientY() 
 {
-    if(!hasRefPoint) return 0;
     return clientY;
 };
 int Entity::getClientH() 
