@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "WG_player_page.h"
+#include "WG_filezilla.cpp"
 
 using std::cout;
 using std::endl;
@@ -12,7 +13,7 @@ WG_Player_Page::WG_Player_Page()
     textUpdated = false;
     assertsPath = "C:\\Users\\Delmac\\Desktop\\Kill_Shot\\asserts\\";
     letters = {"a","b","c","d","e","f","g","h","i","j","k","l","m",
-                "n","o","p","q","r","s","t","u","v","w","x","y","z"};
+                "n","o","p","q","r","s","t","u"," ","v","w","x","y","z"," "};
 }
 
 /**
@@ -25,7 +26,7 @@ WG_Player_Page::WG_Player_Page()
  * @param ascreen the activescreen variable pointer from the game class
  * inother to be able to change screens;
 */
-void WG_Player_Page::onInit(SDL_Renderer* renderer, Audio* sounds,int w, int h, int* ascreen)
+void WG_Player_Page::onInit(SDL_Renderer* renderer, Audio* sounds, Filezilla<WG_Data>* gameD, int w, int h, int* ascreen, int* bID, int*pID)
 {
     SDL_Color titleColor = {165, 42, 42, 255};
     SDL_Color white = {255, 255, 255, 255};
@@ -34,6 +35,9 @@ void WG_Player_Page::onInit(SDL_Renderer* renderer, Audio* sounds,int w, int h, 
     activeScreen = ascreen;
     refHeight = h;
     refWidth = w;
+    gameData = gameD;
+    routeButtonID = bID;
+    activePlayerID = pID;
 
     bgImage.Init( renderer, assertsPath + "gamebg5.png", w, 1024, 1024);
     bgImage.setPosition(0, 0);
@@ -48,20 +52,10 @@ void WG_Player_Page::onInit(SDL_Renderer* renderer, Audio* sounds,int w, int h, 
     inputField.Init( renderer, 49, 190);
     inputField.setReference( 0, 0, w, h);
     inputField.setCenterX(160);
-    inputField.addText(" ", assertsPath + "future.ttf", {165, 42, 89, 255}, 20);
+    inputField.addText(" ", assertsPath + "future.ttf", {165, 42, 89, 255}, 18);
     inputField.addBackground(assertsPath + "textInput.png", 190, 49);
 
     createKeyButtons(7, 240, 15, 15, 49, 45);
-
-    deleteButton.Init( renderer, 49, 45);
-    deleteButton.setReference( 0, 0, w, h);
-    deleteButton.setPosition(103, 420);
-    deleteButton.addBackground(assertsPath + "blue_button12.png", 49, 45);
-
-    proceedButton.Init( renderer, 49, 45);
-    proceedButton.setReference( 0, 0, w, h);
-    proceedButton.setPosition(487, 420);
-    proceedButton.addBackground(assertsPath + "blue_button12.png", 49, 45);
 
     backButton.Init( renderer, bh, bw);
     backButton.setReference( 0, 0, w, h);
@@ -74,6 +68,84 @@ void WG_Player_Page::onInit(SDL_Renderer* renderer, Audio* sounds,int w, int h, 
     quitButton.setBottomLeft(40, 40);
     quitButton.addText("quit", assertsPath + "future.ttf", white, bf);
     quitButton.addBackground(assertsPath + "red_button12.png", 190, 45);
+};
+
+bool WG_Player_Page::onRender(void)
+{
+    bgImage.Render();
+    title0.Render();
+    inputField.Render();
+    for(auto i : keyButtons)
+        i->Render();
+    backButton.Render();
+    quitButton.Render();
+};
+
+void WG_Player_Page::onEvent(SDL_Event event)
+{
+    if (event.type == SDL_MOUSEBUTTONDOWN)
+    {
+        if(event.button.button = SDL_BUTTON_LEFT)
+        {
+            int x, y;
+            SDL_GetMouseState(&x, &y);
+            if(backButton.onClick(x, y) == 0) {
+                changeScreen(2);
+                textInput = " ";
+                textUpdated = true;
+            }
+            if(quitButton.onClick(x, y) == 0) 
+            {
+                changeScreen(1);
+                textInput = " ";
+                textUpdated = true;
+            };
+            for(auto i : keyButtons)
+            {
+                if(i->onClick(x, y) == 0){
+                    if(letters[i->getButtonID()] == " ") continue;
+                    if(textInput.length() == 8) continue;
+                    gameSounds->playSound(0, 0);
+                    textInput += letters[i->getButtonID()];
+                    textUpdated = true;
+                    cout<<letters[i->getButtonID()]<<endl;
+                };
+            }
+
+            if(keyButtons[21]->onClick(x, y) == 0  && textInput.length() != 0)
+            {
+                cout<<"backspace pressed"<<endl;
+                textInput.pop_back();
+                textUpdated = true;
+            }
+
+            if(keyButtons[27]->onClick(x, y) == 0 && textInput.length() > 1)
+            {
+                cout<<"goto game pressed"<<endl;
+                // save textinput to a struct playerdetails
+                // clear textInput
+                // set notActive to true
+                // save the struct in the playerStore class
+                // get the index of the newly added index
+                // set the activePlayerID to the gotten index
+            }
+        }
+    }
+};
+
+void WG_Player_Page::onLoop(void)
+{
+    if(textUpdated)
+    {
+        string tempInput = textInput.length() == 0 ? " " : textInput;
+        inputField.upDateText(tempInput);
+        textUpdated = false;
+    }
+};
+
+void WG_Player_Page::onCleanup(void)
+{
+    keyButtons.clear();
 };
 
 /**
@@ -118,62 +190,4 @@ void WG_Player_Page::createKeyButtons(int tinr,int vypos, int cgap,int rgap, int
         keyButtons.back()->setButtonID(i);
     }
 }
-
-bool WG_Player_Page::onRender(void)
-{
-    bgImage.Render();
-    title0.Render();
-    inputField.Render();
-    for(auto i : keyButtons)
-        i->Render();
-    deleteButton.Render();
-    proceedButton.Render();
-    backButton.Render();
-    quitButton.Render();
-};
-
-void WG_Player_Page::onEvent(SDL_Event event)
-{
-    if (event.type == SDL_MOUSEBUTTONDOWN)
-    {
-        if(event.button.button = SDL_BUTTON_LEFT)
-        {
-            int x, y;
-            SDL_GetMouseState(&x, &y);
-            if(backButton.onClick(x, y) == 0) {
-                changeScreen(2);
-                textInput = "";
-                textUpdated = true;
-            }
-            if(quitButton.onClick(x, y) == 0) 
-            {
-                changeScreen(1);
-                textInput = "";
-                textUpdated = true;
-            };
-            for(auto i : keyButtons)
-            {
-                if(i->onClick(x, y) == 0){
-                    gameSounds->playSound(0, 0);
-                    textInput += letters[i->getButtonID()];
-                    textUpdated = true;
-                };
-            }
-        }
-    }
-};
-
-void WG_Player_Page::onLoop(void)
-{
-    if(textUpdated)
-    {
-        cout<<textInput<<endl;
-        inputField.upDateText(textInput);
-        textUpdated = false;
-    }
-};
-
-void WG_Player_Page::onCleanup(void)
-{};
-
 

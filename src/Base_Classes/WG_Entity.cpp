@@ -140,7 +140,7 @@ int Entity::setCenterY(int x)
     return 0;
 };
 
-int Entity::setTopRight(int x = 20, int y = 20)
+int Entity::setTopLeft(int x = 20, int y = 20)
 {
     if (!hasRefPoint) return 1;
     int calx = getRefX() + x;
@@ -151,7 +151,7 @@ int Entity::setTopRight(int x = 20, int y = 20)
     return 0;
 };
 
-int Entity::setTopLeft(int x = 20, int y = 20)
+int Entity::setTopRight(int x = 20, int y = 20)
 {
     if (!hasRefPoint) return 1;
     int calx = getRefW() - (getClientW() + x);

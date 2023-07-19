@@ -22,7 +22,7 @@ using std::to_string;
 
 Game::Game()
 {
-    activePage = 0;
+    activePage = 7;
     assertPath = "C:\\Users\\Delmac\\Desktop\\Kill_Shot\\asserts\\";
     dataPath = "C:\\Users\\Delmac\\Desktop\\Kill_Shot\\data\\";
     isRunning = true;
@@ -66,8 +66,8 @@ int Game::onInit(void)
     pages.PlayMenuPage.onInit( renderer, &gameSounds, &dataStore ,WG_WIDTH, WG_HEIGHT, &activePage, &activeButtonID, &activePlayerID);
     pages.HelpPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
     pages.CreditsPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
-    pages.PlayerInitPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
-    pages.DeGamePage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
+    pages.PlayerInitPage.onInit( renderer, &gameSounds, &dataStore ,WG_WIDTH, WG_HEIGHT, &activePage, &activeButtonID, &activePlayerID);
+    pages.DeGamePage.onInit( renderer, &gameSounds, &dataStore ,WG_WIDTH, WG_HEIGHT, &activePage, &activePlayerID);
 
     return 0;
 };
@@ -172,6 +172,9 @@ void Game::onLoop(void)
             break;
         case 7:
             pages.PlayerInitPage.onLoop();
+            break;
+        case 8:
+            pages.DeGamePage.onLoop();
             break;
     }
 };

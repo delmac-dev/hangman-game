@@ -51,7 +51,7 @@ bool WG_Start_Page::onRender(void)
 void WG_Start_Page::onEvent(SDL_Event event)
 {
     if (event.type == SDL_KEYDOWN)
-        if( event.key.keysym.sym = SDLK_SPACE)
+        if( event.key.keysym.sym == SDLK_SPACE)
         {
             gameSounds->playSound(1, 0);
             changeScreen(1);

@@ -26,12 +26,12 @@ Filezilla<T>::Filezilla()
 template<typename T>
 int Filezilla<T>::read()
 {
-    ifstream in(filePath, std::ios::in | std::ios::binary);
+    ifstream file(filePath, std::ios::in | std::ios::binary);
     typename vector<T>::size_type size = 0;
-    in.read((char*)&size, sizeof(size));
+    file.read((char*)&size, sizeof(size));
     dataList.resize(size);
-    in.read((char*)&dataList[0], dataList.size() * sizeof(T));
-    in.close();
+    file.read((char*)&dataList[0], dataList.size() * sizeof(T));
+    file.close();
     if(dataList.size() == 0) return 1;
     return 0;
 };
@@ -44,11 +44,11 @@ int Filezilla<T>::read()
 template<typename T>
 int Filezilla<T>::write()
 {
-    ofstream out(filePath, std::ios::out | std::ios::binary);
+    ofstream file(filePath, std::ios::out | std::ios::binary);
     typename vector<T>::size_type size = dataList.size();
-    out.write((char*)&size, sizeof(size));
-    out.write((char*)&dataList[0], dataList.size() * sizeof(T));
-    out.close();
+    file.write((char*)&size, sizeof(size));
+    file.write((char*)&dataList[0], dataList.size() * sizeof(T));
+    file.close();
     read();
     isModified = false;
     return 0;

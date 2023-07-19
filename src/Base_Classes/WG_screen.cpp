@@ -5,6 +5,7 @@
 Screen::Screen()
 {
     screenRenderer = NULL;
+    gameSounds = NULL;
 }
 
 void Screen::changeScreen(int i)
