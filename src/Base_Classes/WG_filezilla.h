@@ -24,6 +24,7 @@ class Filezilla
         int addQueue(vector<T> data);
         void setPath(string path);
         vector<T> getData();
+        void deleteData(int index);
         bool checkIsModified();
 };
 

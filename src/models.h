@@ -3,33 +3,34 @@
 
 #include <iostream>
 
+using std::string;
+
 typedef struct WG_Word
 {
-    char word[30];
-    char level[20];
+    string word;
+    string level;
 } WG_Word;
 
 struct WG_Data
 {
-    int index;
-    char playerName[20];
+    string playerName;
     int buttonID;
     int score;
-    char level[20];
+    string level;
     int attempts;
     int wordCount;
     int lives;
-    char choosenWords[30]; 
-    char hiddenWord[30];
-    char wrongWords[30];
-    char correctWords[30];
+    string hiddenWord;
+    string choosenLetters;
+    string wrongLetters;
+    string correctLetters;
 };
 
 struct WG_Players
 {
-    char playerName[30];
+    string playerName;
     int score;
-    char level[30];
+    string level;
     int wordCount;
 };
 

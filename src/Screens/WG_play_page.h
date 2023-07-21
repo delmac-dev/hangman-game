@@ -14,8 +14,10 @@ class WG_Play_Page: public Screen
 {
     private:
         bool dataModified;
-        bool notActive;
+        bool isActive;
+        bool isDeleteActivated;
         int maxSaves;
+        int deleteState;
         int* routeButtonID;
         int* activePlayerID;
         int refHeight;
@@ -27,7 +29,7 @@ class WG_Play_Page: public Screen
         vector<Button*> routeButtons;
         Filezilla<WG_Data>* gameData; 
         Button backButton;
-        Button startGameButton;
+        Button deleteButton;
 
         void createRouteButtons(int ypos, int gap);
 

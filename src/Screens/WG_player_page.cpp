@@ -1,7 +1,9 @@
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <string.h>
 
 #include "WG_player_page.h"
+#include "models.h"
 #include "WG_filezilla.cpp"
 
 using std::cout;
@@ -91,13 +93,13 @@ void WG_Player_Page::onEvent(SDL_Event event)
             SDL_GetMouseState(&x, &y);
             if(backButton.onClick(x, y) == 0) {
                 changeScreen(2);
-                textInput = " ";
+                textInput = "";
                 textUpdated = true;
             }
             if(quitButton.onClick(x, y) == 0) 
             {
                 changeScreen(1);
-                textInput = " ";
+                textInput = "";
                 textUpdated = true;
             };
             for(auto i : keyButtons)
@@ -108,7 +110,6 @@ void WG_Player_Page::onEvent(SDL_Event event)
                     gameSounds->playSound(0, 0);
                     textInput += letters[i->getButtonID()];
                     textUpdated = true;
-                    cout<<letters[i->getButtonID()]<<endl;
                 };
             }
 
@@ -121,10 +122,11 @@ void WG_Player_Page::onEvent(SDL_Event event)
 
             if(keyButtons[27]->onClick(x, y) == 0 && textInput.length() > 1)
             {
-                cout<<"goto game pressed"<<endl;
-                // save textinput to a struct playerdetails
-                // clear textInput
-                // set notActive to true
+                createPlayer();
+                textInput = "";
+                textUpdated = true;
+                notActive = true;
+                changeScreen(8);
                 // save the struct in the playerStore class
                 // get the index of the newly added index
                 // set the activePlayerID to the gotten index
@@ -189,5 +191,27 @@ void WG_Player_Page::createKeyButtons(int tinr,int vypos, int cgap,int rgap, int
         keyButtons.back()->addBackground(assertsPath + "blue_button12.png", 49, 45);
         keyButtons.back()->setButtonID(i);
     }
+
+    keyButtons[21]->addIcon(assertsPath + "backward.png", 25, 50, 50);
+    keyButtons[27]->addIcon(assertsPath + "forward.png", 25, 50, 50);
 }
 
+
+void WG_Player_Page::createPlayer()
+{
+    WG_Data newPlayer;
+    newPlayer.playerName = textInput;
+    newPlayer.buttonID = *routeButtonID;
+    newPlayer.attempts = 5;
+    newPlayer.score = 0;
+    newPlayer.wordCount = 0;
+    newPlayer.lives = 3;
+    newPlayer.level = "easy";
+    newPlayer.hiddenWord = "";
+    newPlayer.choosenLetters = "";
+    newPlayer.wrongLetters = "";
+    newPlayer.correctLetters = "";
+
+    gameData->add(newPlayer);
+    *activePlayerID = gameData->getData().size() - 1;
+}

@@ -22,7 +22,7 @@ using std::to_string;
 
 Game::Game()
 {
-    activePage = 7;
+    activePage = 0;
     assertPath = "C:\\Users\\Delmac\\Desktop\\Kill_Shot\\asserts\\";
     dataPath = "C:\\Users\\Delmac\\Desktop\\Kill_Shot\\data\\";
     isRunning = true;
@@ -50,12 +50,14 @@ int Game::onInit(void)
     playerStore.setPath(dataPath + "players.dat");
     dataStore.setPath(dataPath + "data.dat");
 
-    WG_Data d = {1, "jade", 0, 300, "hard", 5, 40, 2, "thedsf", "kikoo", "kls", "wksa"};
+    WG_Data d = {"jade", 0, 300, "hard", 5, 40, 2, "thedsf", "kikoo", "kls", "wksa"};
     dataStore.add(d);
-    dataStore.write();
-    wordStore.read();
-    playerStore.read();
-    dataStore.read();
+    d = {"dino", 2, 200, "easy", 5, 40, 2, "thedsf", "kikoo", "kls", "wksa"};
+    dataStore.add(d);
+    // dataStore.write();
+    // wordStore.read();
+    // playerStore.read();
+    // dataStore.read();
 
     gameSounds.addSoundEffect(assertPath + "click1.ogg");
     gameSounds.addSoundEffect(assertPath + "click2.ogg");
@@ -67,7 +69,7 @@ int Game::onInit(void)
     pages.HelpPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
     pages.CreditsPage.onInit( renderer, &gameSounds ,WG_WIDTH, WG_HEIGHT, &activePage);
     pages.PlayerInitPage.onInit( renderer, &gameSounds, &dataStore ,WG_WIDTH, WG_HEIGHT, &activePage, &activeButtonID, &activePlayerID);
-    pages.DeGamePage.onInit( renderer, &gameSounds, &dataStore ,WG_WIDTH, WG_HEIGHT, &activePage, &activePlayerID);
+    pages.DeGamePage.onInit( renderer, &gameSounds, &dataStore, &wordStore, &playerStore, WG_WIDTH, WG_HEIGHT, &activePage, &activePlayerID);
 
     return 0;
 };

@@ -90,3 +90,9 @@ bool Filezilla<T>::checkIsModified()
 {
     return isModified;
 };
+
+template<typename T>
+void Filezilla<T>::deleteData(int index)
+{
+    dataList.erase(dataList.begin() + index);
+}

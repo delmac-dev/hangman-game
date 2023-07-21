@@ -13,7 +13,10 @@ class WG_Game_Page: public Screen
 {
     private:
         bool dataModified;
-        bool notActive;
+        bool isActive;
+        bool isGameOver;
+        bool isGamePaused;
+
         bool isClueChanged;
         bool isLevelChanged;
         bool isWordCountChanged;
@@ -25,7 +28,7 @@ class WG_Game_Page: public Screen
         string gamdWord;
         vector<string> letters;
 
-        int button_state;
+        int buttonState;
         int score;
         int attempts;
         int lives;
@@ -37,9 +40,14 @@ class WG_Game_Page: public Screen
         string level;
         string playerName;
         string hiddenWord;
+        string choosenLetters;
+        string correctLetters;
+        string wrongLetters;
         string assertsPath;
 
         Filezilla<WG_Data>* gameData; 
+        Filezilla<WG_Word>* wordData;
+        Filezilla<WG_Players>* playerData;
 
         Image bgImage;
         Text playerNameText;
@@ -49,21 +57,43 @@ class WG_Game_Page: public Screen
         Text levelText;
         Text scoreText;
         Text wordText;
+
+        Text livesValue;
+        Text attemptsValue;
+        Text cluesValue;
+        Text scoreValue;
+        Text wordCountValue;
+        Text levelValue;
         vector<Button*> letterButtons;
         vector<Button*> hiddenButtons;
         Button pauseButton;
         Button backButton;
 
         void loadOnActive();
-        void generateGameWord();
+        void createGameWord();
         void executeGame();
         void setKeyActive();
         void createKeyButtons(int tinr,int vypos, int cgap,int rgap, int bw, int bh);
         void createHiddenButton(int ypos ,int gap ,int bh, int bw);
 
+        void loadPlayerName();
+        void loadScore();
+        void loadClues();
+        void loadLevel();
+        void loadWordCount();
+        void loadAttempts();
+        void loadLives();
+
     public:
         WG_Game_Page();
-        void onInit(SDL_Renderer* renderer,Audio* sounds, Filezilla<WG_Data>* gameD, int w, int h, int* ascreen, int*pID);
+        void onInit(SDL_Renderer* renderer,
+                    Audio* sounds, 
+                    Filezilla<WG_Data>* gameD, 
+                    Filezilla<WG_Word>* wordD, 
+                    Filezilla<WG_Players>* playerD, 
+                    int w, int h, 
+                    int* ascreen, 
+                    int*pID);
         void onEvent(SDL_Event event);
         void onLoop(void);
         bool onRender(void);

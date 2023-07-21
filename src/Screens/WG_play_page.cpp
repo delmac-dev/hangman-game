@@ -11,8 +11,10 @@ using std::string;
 
 WG_Play_Page:: WG_Play_Page()
 {
-    dataModified = true;
-    notActive = true;
+    isActive = false;
+    deleteState = 0;
+    dataModified = false;
+    isDeleteActivated = false;
     maxSaves = 4;
     assertsPath = "C:\\Users\\Delmac\\Desktop\\Kill_Shot\\asserts\\";
 }
@@ -56,35 +58,14 @@ void WG_Play_Page::onInit(SDL_Renderer* renderer, Audio* sounds,Filezilla<WG_Dat
     backButton.setBottomRight(40, 40);
     backButton.addText("back", assertsPath + "future.ttf", white, 16);
     backButton.addBackground(assertsPath + "red_button12.png", 190, 45);
-};
 
-void WG_Play_Page::createRouteButtons(int ypos, int gap)
-{
-    for( int i = 0; i < maxSaves; i++)
-    {
-        string text = "new game";
-        int bID = -1;
-        SDL_Color color = {255, 255, 255, 255};
-        routeButtons.push_back(new Button());
-        routeButtons.back()->Init( screenRenderer, 45, 190);
-        routeButtons.back()->setReference(0, 0, refWidth, refHeight);
-        routeButtons.back()->setCenterX(ypos + (gap * i) + (45 * i));
-        routeButtons.back()->addBackground(assertsPath + "red_button12.png", 190, 45);
-        if(gameData && gameData->getData().size() != 0)
-        {
-            for(auto j : gameData->getData())
-            {
-                if( j.buttonID == i)
-                {
-                    text = j.playerName;
-                    bID = j.index;
-                }
-            }
-        }
-        routeButtons.back()->addText(text, assertsPath + "future.ttf", color, 16);
-        routeButtons.back()->setButtonID(bID);
-    }
-}
+    deleteButton.Init( renderer, 45, 49);
+    deleteButton.setReference( 0, 0, refWidth, refHeight);
+    deleteButton.setBottomLeft(40, 40);
+    deleteButton.addIcon(assertsPath + "trashcan.png", 30, 50, 50);
+    deleteButton.addBackground(assertsPath + "red_button05.png", 49, 45);
+    deleteButton.addBackground(assertsPath + "blue_button08.png", 49, 45);
+};
 
 bool WG_Play_Page::onRender(void)
 {
@@ -94,6 +75,7 @@ bool WG_Play_Page::onRender(void)
     for(auto i : routeButtons)
         i->Render();
     backButton.Render();
+    deleteButton.Render();
 };
 
 void WG_Play_Page::onEvent(SDL_Event event)
@@ -106,35 +88,93 @@ void WG_Play_Page::onEvent(SDL_Event event)
             SDL_GetMouseState(&x, &y);
             for(int i = 0; i < routeButtons.size(); i++)
             {
-                if(routeButtons[i]->onClick(x, y) == 0)
+                if(routeButtons[i]->onClick(x, y) == 0 && !isDeleteActivated)
                 {
                     if(routeButtons[i]->getButtonID() == -1) {
                         *routeButtonID = i;
-                        changeScreen(7);
+                        changeScreen(7); // player page
                     }
                     else{
                         *activePlayerID = routeButtons[i]->getButtonID();
-                        changeScreen(8);
+                        changeScreen(8); // game page
                     };
+                    isActive = false;
+                }
+                else if (routeButtons[i]->onClick(x, y) == 0 && isDeleteActivated)
+                {
+                    deleteState = 0;
+                    isDeleteActivated = false;
+                    deleteButton.switchBgIndex(deleteState);
+                    dataModified = true;
+                    if(routeButtons[i]->getButtonID() != -1) {
+                        gameData->deleteData(routeButtons[i]->getButtonID());
+                    }
                 }
             }
-            if(backButton.onClick(x, y) == 0) changeScreen(1);
+            if(backButton.onClick(x, y) == 0) {
+                changeScreen(1);
+                isActive = false;
+                deleteState = 0;
+                isDeleteActivated = false;
+                deleteButton.switchBgIndex(deleteState);
+            };
+
+            if(deleteButton.onClick(x, y) == 0){
+                deleteState = isDeleteActivated ? 0 : 1;
+                isDeleteActivated = !isDeleteActivated;
+                deleteButton.switchBgIndex(deleteState);
+                for(auto i: routeButtons)
+                {
+                    if(i->getButtonID() != -1)
+                        i->switchBgIndex(deleteState);
+                }
+            }
         }
     }
 };
 
 void WG_Play_Page::onLoop(void)
 {
-    if(!notActive && !dataModified) return;
+    if(isActive && !dataModified) return;
+    if(routeButtons.size() != 0) routeButtons.clear();
     createRouteButtons(250, 30);
-    notActive = false;
+    isActive = true;
     dataModified = false;
-};
+}
 
 void WG_Play_Page::onCleanup(void)
 {
-    // todo : delete all pointers
+    title0.cleanUp();
+    title1.cleanUp();
     routeButtons.clear();
 };
 
-
+void WG_Play_Page::createRouteButtons(int ypos, int gap)
+{
+    for( int i = 0; i < maxSaves; i++)
+    {
+        string text = "new game";
+        int playerID = -1;
+        SDL_Color color = {255, 255, 255, 255};
+        routeButtons.push_back(new Button());
+        routeButtons.back()->Init( screenRenderer, 45, 190);
+        routeButtons.back()->setReference(0, 0, refWidth, refHeight);
+        routeButtons.back()->setCenterX(ypos + (gap * i) + (45 * i));
+        routeButtons.back()->addBackground(assertsPath + "red_button12.png", 190, 45);
+        routeButtons.back()->addBackground(assertsPath + "blue_button01.png", 190, 45);
+        routeButtons.back()->switchBgIndex(deleteState);
+        if(gameData && gameData->getData().size() != 0)
+        {
+            for(int j = 0 ; j < gameData->getData().size(); j++)
+            {
+                if( gameData->getData()[j].buttonID == i)
+                {
+                    text = gameData->getData()[j].playerName;
+                    playerID = j;
+                }
+            }
+        }
+        routeButtons.back()->addText(text, assertsPath + "future.ttf", color, 16);
+        routeButtons.back()->setButtonID(playerID);
+    }
+}
